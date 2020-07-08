@@ -12,3 +12,4 @@ categories = ["api-bindings", "multimedia::images"]
 
 [dependencies]
 pstoedit-sys = { version = "0.1.0", path = "pstoedit-sys" }
+smallvec = { version = "1", optional = true }

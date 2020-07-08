@@ -36,6 +36,9 @@ use std::ptr;
 pub use driver_info::DriverInfo;
 pub use error::{Error, Result};
 
+#[cfg(feature = "smallvec")]
+type Vec<T> = smallvec::SmallVec<[T; 5]>;
+
 /// Initialize connection to pstoedit. Must be called before calling any other
 /// function that requires a connection to pstoedit.
 ///
