@@ -1,0 +1,12 @@
+[package]
+name = "pstoedit-sys"
+version = "0.1.0"
+authors = ["Han Mertens <hanmertens@outlook.com>"]
+edition = "2018"
+links = "pstoedit"
+license = "GPL-2.0-or-later"
+description = "Native bindings to pstoedit"
+repository = "https://github.com/hanmertens/pstoedit-rs"
+readme = "README.md"
+keywords = ["pstoedit", "sys", "ffi"]
+categories = ["external-ffi-bindings", "multimedia::images"]
