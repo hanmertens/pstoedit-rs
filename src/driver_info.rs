@@ -123,7 +123,7 @@ impl DriverInfo {
     ///
     /// # Errors
     /// [`NotInitialized`][Error::NotInitialized] if [`init`][crate::init] was
-    /// not called succesfully.
+    /// not called successfully.
     pub fn get() -> Result<Self> {
         let info = unsafe { ffi::getPstoeditDriverInfo_plainC() };
         NonNull::new(info).map(Self).ok_or(Error::NotInitialized)

@@ -1,4 +1,4 @@
-//! Rust bindings to [pstoedit](htp://pstoedit.net/).
+//! Rust bindings to [pstoedit](htp://pstoedit.net).
 //!
 //! This crate contains Rust bindings to pstoedit, a C++ program that can
 //! translate PostScript and PDF graphics into other vector formats.
@@ -76,7 +76,7 @@ pub fn init() -> Result<()> {
 ///
 /// # Errors
 /// - [`NotInitialized`][Error::NotInitialized] if [`init`] was not called
-/// succesfully.
+/// successfully.
 /// - [`NulError`][Error::NulError] if a passed string contains an internal nul
 /// byte.
 /// - [`PstoeditError`][Error::PstoeditError] if pstoedit returns with a

@@ -1,4 +1,4 @@
-//! Native bindings to [pstoedit](http://pstoedit.net/).
+//! Native bindings to [pstoedit](http://pstoedit.net).
 //!
 //! This crate contains low-level bindings to the C API of pstoedit, a C++
 //! program that can translate PostScript and PDF graphics into other vector
