@@ -37,7 +37,9 @@ pub use driver_info::DriverInfo;
 pub use error::{Error, Result};
 
 #[cfg(feature = "smallvec")]
-type Vec<T> = smallvec::SmallVec<[T; 5]>;
+type SmallVec<T> = smallvec::SmallVec<[T; 5]>;
+#[cfg(not(feature = "smallvec"))]
+type SmallVec<T> = Vec<T>;
 
 /// Initialize connection to pstoedit. Must be called before calling any other
 /// function that requires a connection to pstoedit.
@@ -86,11 +88,38 @@ where
     S: AsRef<str>,
 {
     let argc = args.len();
-    let mut argv = Vec::with_capacity(argc);
+    let mut argv = SmallVec::with_capacity(argc);
     for arg in args {
         argv.push(CString::new(arg.as_ref())?);
     }
     let gs = gs.map(|s| CString::new(s.as_ref())).transpose()?;
+    pstoedit_cstr(&argv, gs)
+}
+
+/// Main way to interact with pstoedit, transferring ownership of arguments.
+///
+/// See [`pstoedit`] for more information. The only difference is that this
+/// method takes ownership of its arguments. This can be advantageous as it may
+/// involve less copying and allocations, but it can also be less ergonomic. The
+/// main use case is passing a [`String`] vector or iterator.
+///
+/// # Examples
+/// ```no_run
+/// pstoedit::init().unwrap();
+/// pstoedit::pstoedit_owned(std::env::args(), None).unwrap();
+/// ```
+pub fn pstoedit_owned<T>(args: T, gs: Option<T::Item>) -> Result<()>
+where
+    T: IntoIterator,
+    T::Item: Into<Vec<u8>>,
+{
+    let args = args.into_iter();
+    let argc_min = args.size_hint().0;
+    let mut argv = SmallVec::with_capacity(argc_min);
+    for arg in args {
+        argv.push(CString::new(arg.into())?);
+    }
+    let gs = gs.map(|s| CString::new(s.into())).transpose()?;
     pstoedit_cstr(&argv, gs)
 }
 
@@ -101,7 +130,7 @@ fn pstoedit_cstr<S>(argv: &[S], gs: Option<S>) -> Result<()>
 where
     S: AsRef<CStr>,
 {
-    let argv: Vec<_> = argv.iter().map(|s| s.as_ref().as_ptr()).collect();
+    let argv: SmallVec<_> = argv.iter().map(|s| s.as_ref().as_ptr()).collect();
     // First as_ref is required to prevent CString from being moved and dropped
     let gs = gs.as_ref().map_or(ptr::null(), |s| s.as_ref().as_ptr());
     // Safety: due to CStr input arguments it is ensured they are valid C strings
@@ -143,5 +172,13 @@ mod tests {
         // Ensure ghostscript is not obtained through environment
         env::set_var("GS", "should_not_be_used");
         pstoedit(&["pstoedit", "-gstest"], Some("gs")).unwrap();
+    }
+
+    #[test]
+    fn test_pstoedit_owned() {
+        init().unwrap();
+        // Ensure ghostscript is not obtained through environment
+        env::set_var("GS", "should_not_be_used");
+        pstoedit_owned(vec!["pstoedit", "-gstest"], Some("gs")).unwrap();
     }
 }
