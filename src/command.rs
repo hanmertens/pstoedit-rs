@@ -38,10 +38,9 @@ pub struct Command {
 impl Command {
     /// Create a command with program name and without arguments.
     ///
-    /// In the [`pstoedit`][crate::pstoedit] function, the program name must be
-    /// set explicitly as the first argument, this is already done in this
-    /// function and must therefore not be done using [`arg`][Command::arg] or
-    /// [`args`][Command::args].
+    /// The program name is already set in this function and should not be set
+    /// using [`arg`][Command::arg], [`args`][Command::args], or
+    /// [`args_slice`][Command::args_slice].
     pub fn new() -> Self {
         Self {
             args: smallvec![CString::new("pstoedit").unwrap()],
