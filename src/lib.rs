@@ -4,27 +4,28 @@
 //! translate PostScript and PDF graphics into other vector formats.
 //!
 //! # Usage
-//! First, the [`init`] function must be called. Then, other functions can be
-//! called to interact with pstoedit. The main function for this is
-//! [`pstoedit`]. Additionally, information about drivers can be obtained using
-//! [`DriverInfo`].
+//! First, the [`init`] function must be called. Then, interaction with pstoedit
+//! is possible using [`Command`] or [`DriverInfo`].
 //!
 //! # Examples
 //! ```no_run
-//! pstoedit::init().unwrap();
+//! use pstoedit::{DriverInfo, Command};
+//!
+//! pstoedit::init()?;
 //!
 //! // For every driver ...
-//! for driver in &pstoedit::DriverInfo::get().unwrap() {
-//!     let format = driver.symbolic_name().unwrap();
-//!     let extension = driver.extension().unwrap();
+//! for driver in &DriverInfo::get()? {
+//!     let format = driver.symbolic_name()?;
+//!     let extension = driver.extension()?;
 //!     let output_name = format!("output-{}.{}", format, extension);
 //!
 //!     // ... convert input.ps to that format
-//!     let cmd = ["pstoedit", "-f", format, "input.ps", output_name.as_ref()];
-//!     pstoedit::pstoedit(&cmd, None).unwrap();
+//!     Command::new().args_slice(&["-f", format, "input.ps"])?.arg(output_name)?.run()?;
 //! }
+//! # Ok::<(), pstoedit::Error>(())
 //! ```
 
+mod command;
 pub mod driver_info;
 mod error;
 
@@ -33,13 +34,18 @@ use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 use std::ptr;
 
+pub use command::Command;
 pub use driver_info::DriverInfo;
 pub use error::{Error, Result};
 
 #[cfg(feature = "smallvec")]
 type SmallVec<T> = smallvec::SmallVec<[T; 5]>;
+#[cfg(feature = "smallvec")]
+use smallvec::smallvec;
 #[cfg(not(feature = "smallvec"))]
 type SmallVec<T> = Vec<T>;
+#[cfg(not(feature = "smallvec"))]
+use vec as smallvec;
 
 /// Initialize connection to pstoedit. Must be called before calling any other
 /// function that requires a connection to pstoedit.
@@ -60,7 +66,8 @@ pub fn init() -> Result<()> {
 
 /// Main way to interact with pstoedit.
 ///
-/// The slice `args` represents the arguments passed to pstoedit. The argument
+/// The slice `args` represents the arguments passed to pstoedit. In the first
+/// position, the name of the program (e.g. pstoedit) is expected. The parameter
 /// `gs` can be used to specify the command to be used to call ghostscript. If
 /// `None`, pstoedit will try to determine it automatically.
 ///

@@ -10,8 +10,7 @@ PostScript and PDF graphics into other vector formats.
 ## Features
 
 The API is similar to the C API of pstoedit. Information on drivers can be
-inquired and arbitrary commands can be passed to pstoedit via the `pstoedit`
-function.
+inquired and arbitrary commands to pstoedit can be constructed and run.
 
 Optional Cargo features:
 - `smallvec`: potentially reduce the number of allocations using the
@@ -20,17 +19,18 @@ Optional Cargo features:
 ## Examples
 
 ```rust
-pstoedit::init().unwrap();
+use pstoedit::{DriverInfo, Command};
+
+pstoedit::init()?;
 
 // For every driver ...
-for driver in &pstoedit::DriverInfo::get().unwrap() {
-    let format = driver.symbolic_name().unwrap();
-    let extension = driver.extension().unwrap();
+for driver in &DriverInfo::get()? {
+    let format = driver.symbolic_name()?;
+    let extension = driver.extension()?;
     let output_name = format!("output-{}.{}", format, extension);
 
     // ... convert input.ps to that format
-    let cmd = ["pstoedit", "-f", format, "input.ps", output_name.as_ref()];
-    pstoedit::pstoedit(&cmd, None).unwrap();
+    Command::new().args_slice(&["-f", format, "input.ps"])?.arg(output_name)?.run()?;
 }
 ```
 
