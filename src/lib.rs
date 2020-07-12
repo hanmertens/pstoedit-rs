@@ -73,14 +73,16 @@ pub fn init() -> Result<()> {
 ///
 /// # Examples
 /// ```
-/// pstoedit::init().unwrap();
-/// pstoedit::pstoedit(&["pstoedit", "-gstest"], None).unwrap();
+/// pstoedit::init()?;
+/// pstoedit::pstoedit(&["pstoedit", "-gstest"], None)?;
+/// # Ok::<(), pstoedit::Error>(())
 /// ```
 ///
 /// ```no_run
-/// pstoedit::init().unwrap();
+/// pstoedit::init()?;
 /// let cmd = ["pstoedit", "-f", "latex2e", "input.ps", "output.tex"];
-/// pstoedit::pstoedit(&cmd, None).unwrap();
+/// pstoedit::pstoedit(&cmd, None)?;
+/// # Ok::<(), pstoedit::Error>(())
 /// ```
 ///
 /// # Errors
@@ -112,8 +114,9 @@ where
 ///
 /// # Examples
 /// ```no_run
-/// pstoedit::init().unwrap();
-/// pstoedit::pstoedit_owned(std::env::args(), None).unwrap();
+/// pstoedit::init()?;
+/// pstoedit::pstoedit_owned(std::env::args(), None)?;
+/// # Ok::<(), pstoedit::Error>(())
 /// ```
 pub fn pstoedit_owned<I, S>(args: I, gs: Option<S>) -> Result<()>
 where

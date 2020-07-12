@@ -8,7 +8,7 @@ env:
 
 jobs:
   test:
-    name: Test sys
+    name: Test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -51,7 +51,7 @@ jobs:
       working-directory: pstoedit-sys
 
   lint:
-    name: Lint sys
+    name: Lint
     runs-on: ubuntu-latest
     steps:
     - name: Check out repository

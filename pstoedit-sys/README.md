@@ -1,6 +1,6 @@
 # pstoedit-sys
 
-![CI sys](https://github.com/hanmertens/pstoedit-rs/workflows/CI%20sys/badge.svg)
+[![CI sys](https://github.com/hanmertens/pstoedit-rs/workflows/CI%20sys/badge.svg)](https://github.com/hanmertens/pstoedit-rs/actions?query=workflow%3A"CI+sys")
 
 Native bindings to [pstoedit](http://pstoedit.net).
 

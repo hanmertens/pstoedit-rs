@@ -1,6 +1,6 @@
 # pstoedit
 
-![CI](https://github.com/hanmertens/pstoedit-rs/workflows/CI/badge.svg)
+[![CI](https://github.com/hanmertens/pstoedit-rs/workflows/CI/badge.svg)](https://github.com/hanmertens/pstoedit-rs/actions?query=workflow%3ACI)
 
 Rust bindings to [pstoedit](http://pstoedit.net).
 

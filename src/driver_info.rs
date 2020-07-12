@@ -1,20 +1,20 @@
 //! Information on pstoedit drivers.
 //!
 //! Inquire information on drivers using [`DriverInfo::get`] or
-//! [`DriverInfo::get_native`], and iterate over it using [`DriverInfo::iter`]
-//! to yield a [`DriverDescription`] for each driver.
+//! [`DriverInfo::get_native`], and iterate over it to yield a
+//! [`DriverDescription`] for each driver.
 //!
 //! # Examples
 //! ```
 //! use std::collections::HashSet;
 //! use pstoedit::DriverInfo;
 //!
-//! pstoedit::init().unwrap();
+//! pstoedit::init()?;
 //!
-//! let drivers = DriverInfo::get().unwrap();
-//! let native_drivers = DriverInfo::get_native().unwrap();
+//! let drivers = DriverInfo::get()?;
+//! let native_drivers = DriverInfo::get_native()?;
 //!
-//! // The number of non-native drivers cannot be a negative
+//! // The number of non-native drivers cannot be negative
 //! let num = drivers.iter().count();
 //! let num_native = native_drivers.iter().count();
 //! assert!(num >= num_native);
@@ -22,13 +22,14 @@
 //! // Ensure all drivers have a unique symbolic name
 //! let mut formats = HashSet::new();
 //! for driver in &drivers {
-//!     assert!(formats.insert(driver.symbolic_name().unwrap()));
+//!     assert!(formats.insert(driver.symbolic_name()?));
 //! }
 //!
 //! // Ensure all native drivers are included in the list of all drivers
 //! for driver in &native_drivers {
-//!     assert!(formats.contains(driver.symbolic_name().unwrap()));
+//!     assert!(formats.contains(driver.symbolic_name()?));
 //! }
+//! # Ok::<(), pstoedit::Error>(())
 //! ```
 
 use crate::ffi;
@@ -103,7 +104,7 @@ impl<'a> DriverDescription<'a> {
 
 /// Information on pstoedit drivers.
 ///
-/// See [module-level documentation][`self`] for more details.
+/// See [module-level documentation][self] for more details.
 // Holds pointer to first element of DriverDescription_S array
 // The end of the array is indicated by an element with a null pointer as symbolicname
 pub struct DriverInfo(NonNull<ffi::DriverDescription_S>);
@@ -131,7 +132,7 @@ impl DriverInfo {
 
     /// Inquire native driver information.
     ///
-    /// See [`DriverInfo::get`] for usage.
+    /// See [`get`][DriverInfo::get] for usage.
     pub fn get_native() -> Result<Self> {
         let info = unsafe { ffi::getPstoeditNativeDriverInfo_plainC() };
         NonNull::new(info).map(Self).ok_or(Error::NotInitialized)
@@ -140,7 +141,7 @@ impl DriverInfo {
     /// Generate iterator over drivers in driver information.
     ///
     /// # Examples
-    /// See [`DriverInfo::get`].
+    /// See [`get`][DriverInfo::get].
     pub fn iter(&self) -> Iter {
         Iter {
             driver_info: &self,
