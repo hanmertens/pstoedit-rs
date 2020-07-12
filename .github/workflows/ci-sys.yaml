@@ -15,13 +15,13 @@ jobs:
         build: [stable, beta, nightly, macos]
         include:
           - build: stable
-            os: ubuntu-latest
+            os: ubuntu-20.04
             rust: stable
           - build: beta
-            os: ubuntu-latest
+            os: ubuntu-20.04
             rust: beta
           - build: nightly
-            os: ubuntu-latest
+            os: ubuntu-20.04
             rust: nightly
           - build: macos
             os: macos-latest
@@ -30,7 +30,7 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
     - name: Install pstoedit (linux)
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-20.04'
       run: |
            sudo apt-get update
            sudo apt-get install -y libpstoedit-dev
