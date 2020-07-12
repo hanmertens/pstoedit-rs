@@ -1,5 +1,7 @@
 # pstoedit
 
+![CI](https://github.com/hanmertens/pstoedit-rs/workflows/CI/badge.svg)
+
 Rust bindings to [pstoedit](http://pstoedit.net).
 
 This crate contains Rust bindings to pstoedit, a C++ program that can translate

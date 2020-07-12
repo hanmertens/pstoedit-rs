@@ -1,5 +1,7 @@
 # pstoedit-sys
 
+![CI sys](https://github.com/hanmertens/pstoedit-rs/workflows/CI%20sys/badge.svg)
+
 Native bindings to [pstoedit](http://pstoedit.net).
 
 This crate contains low-level bindings to the C API of pstoedit, a C++ program
