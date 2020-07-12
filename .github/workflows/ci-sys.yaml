@@ -29,12 +29,12 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
-    - name: Install pstoedit
+    - name: Install pstoedit (linux)
       if: matrix.os == 'ubuntu-latest'
       run: |
            sudo apt-get update
            sudo apt-get install -y pstoedit
-    - name: Install pstoedit
+    - name: Install pstoedit (mac)
       if: matrix.os == 'macos-latest'
       run: brew install pstoedit
     - name: Install Rust toolchain
@@ -43,12 +43,12 @@ jobs:
         toolchain: ${{ matrix.rust }}
         override: true
         profile: minimal
-    - name: Go to sys directory
-      run: cd pstoedit-sys
     - name: Build
       run: cargo build
+      working-directory: pstoedit-sys
     - name: Test
       run: cargo test
+      working-directory: pstoedit-sys
 
   lint:
     name: Lint sys
@@ -61,11 +61,12 @@ jobs:
       with:
         toolchain: stable
         override: true
-    - name: Go to sys directory
-      run: cd pstoedit-sys
     - name: Check clippy
       run: cargo clippy
+      working-directory: pstoedit-sys
     - name: Check formatting
       run: cargo fmt -- --check
+      working-directory: pstoedit-sys
     - name: Check documentation
       run: cargo doc --no-deps
+      working-directory: pstoedit-sys
