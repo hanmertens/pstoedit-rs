@@ -108,10 +108,10 @@ where
 /// pstoedit::init().unwrap();
 /// pstoedit::pstoedit_owned(std::env::args(), None).unwrap();
 /// ```
-pub fn pstoedit_owned<T>(args: T, gs: Option<T::Item>) -> Result<()>
+pub fn pstoedit_owned<I, S>(args: I, gs: Option<S>) -> Result<()>
 where
-    T: IntoIterator,
-    T::Item: Into<Vec<u8>>,
+    I: IntoIterator<Item = S>,
+    S: Into<Vec<u8>>,
 {
     let args = args.into_iter();
     let argc_min = args.size_hint().0;
@@ -126,12 +126,13 @@ where
 /// Thin safe wrapper to main pstoedit API.
 ///
 /// Safety is ensured using the invariants of [`CStr`].
-fn pstoedit_cstr<S>(argv: &[S], gs: Option<S>) -> Result<()>
+fn pstoedit_cstr<S, T>(argv: &[S], gs: Option<T>) -> Result<()>
 where
     S: AsRef<CStr>,
+    T: AsRef<CStr>,
 {
     let argv: SmallVec<_> = argv.iter().map(|s| s.as_ref().as_ptr()).collect();
-    // First as_ref is required to prevent CString from being moved and dropped
+    // First as_ref is required to prevent move and drop if T = CString
     let gs = gs.as_ref().map_or(ptr::null(), |s| s.as_ref().as_ptr());
     // Safety: due to CStr input arguments it is ensured they are valid C strings
     unsafe { pstoedit_raw(&argv, gs) }
