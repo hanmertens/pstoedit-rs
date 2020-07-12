@@ -1,0 +1,71 @@
+name: CI sys
+on: [push, pull_request]
+
+env:
+  RUST_BACKTRACE: full
+  RUSTFLAGS: -D warnings
+  CARGO_TERM_VERBOSE: true
+
+jobs:
+  test:
+    name: Test sys
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build: [stable, beta, nightly, macos]
+        include:
+          - build: stable
+            os: ubuntu-latest
+            rust: stable
+          - build: beta
+            os: ubuntu-latest
+            rust: beta
+          - build: nightly
+            os: ubuntu-latest
+            rust: nightly
+          - build: macos
+            os: macos-latest
+            rust: stable
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Install pstoedit
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+           sudo apt-get update
+           sudo apt-get install -y pstoedit
+    - name: Install pstoedit
+      if: matrix.os == 'macos-latest'
+      run: brew install pstoedit
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: ${{ matrix.rust }}
+        override: true
+        profile: minimal
+    - name: Go to sys directory
+      run: cd pstoedit-sys
+    - name: Build
+      run: cargo build
+    - name: Test
+      run: cargo test
+
+  lint:
+    name: Lint sys
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+    - name: Go to sys directory
+      run: cd pstoedit-sys
+    - name: Check clippy
+      run: cargo clippy
+    - name: Check formatting
+      run: cargo fmt -- --check
+    - name: Check documentation
+      run: cargo doc --no-deps
