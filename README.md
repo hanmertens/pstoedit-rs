@@ -38,7 +38,8 @@ for driver in &DriverInfo::get()? {
 
 Only dynamic linking to pstoedit is supported, so pstoedit needs to be
 installed. The supported DLL version is 301, which is compatible with pstoedit
-version 3.17 and higher.
+version 3.xx starting from 3.17. Currently, pstoedit version 4.00 and higher
+are not supported.
 
 ## License
 
