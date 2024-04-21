@@ -13,12 +13,20 @@ pub struct DriverDescription_S {
     pub backendSupportsText: ::std::os::raw::c_int,
     pub backendSupportsImages: ::std::os::raw::c_int,
     pub backendSupportsMultiplePages: ::std::os::raw::c_int,
+    #[cfg(feature = "pstoedit_4_00")]
     pub formatGroup: ::std::os::raw::c_int,
 }
 #[test]
 fn bindgen_test_layout_DriverDescription_S() {
     const UNINIT: ::std::mem::MaybeUninit<DriverDescription_S> = ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
+    #[cfg(not(feature = "pstoedit_4_00"))]
+    assert_eq!(
+        ::std::mem::size_of::<DriverDescription_S>(),
+        56usize,
+        concat!("Size of: ", stringify!(DriverDescription_S))
+    );
+    #[cfg(feature = "pstoedit_4_00")]
     assert_eq!(
         ::std::mem::size_of::<DriverDescription_S>(),
         64usize,
@@ -131,6 +139,7 @@ fn bindgen_test_layout_DriverDescription_S() {
             stringify!(backendSupportsMultiplePages)
         )
     );
+    #[cfg(feature = "pstoedit_4_00")]
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).formatGroup) as usize - ptr as usize },
         56usize,
@@ -157,12 +166,14 @@ extern "C" {
     pub fn clearPstoeditDriverInfo_plainC(ptr: *mut DriverDescription_S);
 }
 extern "C" {
+    #[cfg(feature = "pstoedit_4_01")]
     pub fn loadpstoeditplugins_plainC(
         progname: *const ::std::os::raw::c_char,
         verbose: ::std::os::raw::c_int,
     );
 }
 extern "C" {
+    #[cfg(feature = "pstoedit_4_00")]
     pub fn unloadpstoeditplugins();
 }
 extern "C" {

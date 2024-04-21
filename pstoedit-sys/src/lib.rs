@@ -20,6 +20,9 @@ mod tests {
 
     #[test]
     fn dll_version() {
+        #[cfg(not(feature = "pstoedit_4_00"))]
+        assert_eq!(pstoeditdllversion, 301);
+        #[cfg(feature = "pstoedit_4_00")]
         assert_eq!(pstoeditdllversion, 401);
     }
 
