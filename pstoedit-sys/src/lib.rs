@@ -20,7 +20,7 @@ mod tests {
 
     #[test]
     fn dll_version() {
-        assert_eq!(pstoeditdllversion, 301);
+        assert_eq!(pstoeditdllversion, 401);
     }
 
     #[test]
