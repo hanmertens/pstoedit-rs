@@ -10,6 +10,9 @@ readme = "README.md"
 keywords = ["pstoedit"]
 categories = ["api-bindings", "multimedia::images"]
 
+[features]
+pstoedit_4_00 = ["pstoedit-sys/pstoedit_4_00"]
+
 [dependencies]
 pstoedit-sys = { version = "0.1.0", path = "pstoedit-sys" }
 smallvec = { version = "1", optional = true }
