@@ -144,7 +144,7 @@ impl DriverInfo {
     /// See [`get`][DriverInfo::get].
     pub fn iter(&self) -> Iter {
         Iter {
-            driver_info: &self,
+            driver_info: self,
             offset: 0,
         }
     }
