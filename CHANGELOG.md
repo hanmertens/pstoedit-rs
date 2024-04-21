@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Feature `pstoedit_4_00` to target pstoedit version 4.xx.
+- New method `format_group` for `DriverDescription` and associated struct.
 
 ## [0.1.0] &ndash; 2020-07-13
 ### Added

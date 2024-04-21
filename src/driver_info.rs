@@ -37,6 +37,14 @@ use crate::{Error, Result};
 use std::ffi::CStr;
 use std::ptr::NonNull;
 
+/// Format group of pstoedit driver.
+///
+/// Driver-specific options of pstoedit are specific to a format group. All
+/// drivers in a format group have an equal value of `FormatGroup`.
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg(feature = "pstoedit_4_00")]
+pub struct FormatGroup(std::ffi::c_int);
+
 /// Description of pstoedit driver.
 ///
 /// Information on pstoedit drivers can be obtained through [`DriverInfo`].
@@ -99,6 +107,12 @@ impl<'a> DriverDescription<'a> {
     /// Whether the backend supports multiple pages.
     pub fn multipage_support(self) -> bool {
         self.0.backendSupportsMultiplePages != 0
+    }
+
+    /// Format group of driver.
+    #[cfg(feature = "pstoedit_4_00")]
+    pub fn format_group(self) -> FormatGroup {
+        FormatGroup(self.0.formatGroup)
     }
 }
 
