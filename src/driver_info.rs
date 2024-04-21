@@ -43,6 +43,7 @@ use std::ptr::NonNull;
 /// drivers in a format group have an equal value of `FormatGroup`.
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg(feature = "pstoedit_4_00")]
+#[cfg_attr(docsrs, doc(cfg(feature = "pstoedit_4_00")))]
 pub struct FormatGroup(std::ffi::c_int);
 
 /// Description of pstoedit driver.
@@ -111,6 +112,7 @@ impl<'a> DriverDescription<'a> {
 
     /// Format group of driver.
     #[cfg(feature = "pstoedit_4_00")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "pstoedit_4_00")))]
     pub fn format_group(self) -> FormatGroup {
         FormatGroup(self.0.formatGroup)
     }

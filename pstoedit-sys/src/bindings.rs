@@ -14,6 +14,7 @@ pub struct DriverDescription_S {
     pub backendSupportsImages: ::std::os::raw::c_int,
     pub backendSupportsMultiplePages: ::std::os::raw::c_int,
     #[cfg(feature = "pstoedit_4_00")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "pstoedit_4_00")))]
     pub formatGroup: ::std::os::raw::c_int,
 }
 #[test]
@@ -170,6 +171,7 @@ extern "C" {
 }
 extern "C" {
     #[cfg(feature = "pstoedit_4_01")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "pstoedit_4_01")))]
     pub fn loadpstoeditplugins_plainC(
         progname: *const ::std::os::raw::c_char,
         verbose: ::std::os::raw::c_int,
@@ -177,6 +179,7 @@ extern "C" {
 }
 extern "C" {
     #[cfg(feature = "pstoedit_4_00")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "pstoedit_4_00")))]
     pub fn unloadpstoeditplugins();
 }
 extern "C" {

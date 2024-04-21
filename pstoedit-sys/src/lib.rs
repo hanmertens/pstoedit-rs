@@ -15,6 +15,8 @@
 //! - No feature starting with `pstoedit_`: compatible with pstoedit version
 //!   3.17&ndash;3.78.
 
+#![cfg_attr(docsrs, feature(doc_cfg))]
+
 #[allow(non_camel_case_types)]
 #[allow(non_snake_case)]
 #[allow(non_upper_case_globals)]

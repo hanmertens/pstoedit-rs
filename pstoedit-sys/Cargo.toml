@@ -11,6 +11,10 @@ readme = "README.md"
 keywords = ["pstoedit", "sys", "ffi"]
 categories = ["external-ffi-bindings", "multimedia::images"]
 
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
 [features]
 pstoedit_4_01 = ["pstoedit_4_00"]
 pstoedit_4_00 = []

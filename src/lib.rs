@@ -34,6 +34,8 @@
 //! # Ok::<(), pstoedit::Error>(())
 //! ```
 
+#![cfg_attr(docsrs, feature(doc_cfg))]
+
 mod command;
 pub mod driver_info;
 mod error;
