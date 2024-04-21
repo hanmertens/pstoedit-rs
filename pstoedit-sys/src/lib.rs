@@ -2,8 +2,18 @@
 //!
 //! This crate contains low-level bindings to the C API of pstoedit, a C++
 //! program that can translate PostScript and PDF graphics into other vector
-//! formats. The supported DLL version is 301, which is compatible with pstoedit
-//! version 3.17 and higher.
+//! formats.
+//!
+//! # Compatibility
+//! Multiple versions of pstoedit are supported, but the appropriate feature
+//! starting with `pstoedit_` has to be enabled.
+//!
+//! - `pstoedit_4_01`: compatible with pstoedit version 4.01, and likely with future
+//!   4.xx releases.
+//! - `pstoedit_4_00`: compatible with pstoedit version 4.00&ndash;4.01, and likely
+//!   with future 4.xx releases.
+//! - No feature starting with `pstoedit_`: compatible with pstoedit version
+//!   3.17&ndash;3.78.
 
 #[allow(non_camel_case_types)]
 #[allow(non_snake_case)]

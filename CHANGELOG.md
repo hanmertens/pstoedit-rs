@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Support for pstoedit version 4.x.
+- Feature `pstoedit_4_00` to target pstoedit version 4.xx.
 
 ## [0.1.0] &ndash; 2020-07-13
 ### Added

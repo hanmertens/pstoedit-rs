@@ -3,6 +3,15 @@
 //! This crate contains Rust bindings to pstoedit, a C++ program that can
 //! translate PostScript and PDF graphics into other vector formats.
 //!
+//! # Compatiblity
+//! Multiple versions of pstoedit are supported, but the appropriate feature
+//! starting with `pstoedit_` has to be enabled.
+//!
+//! - `pstoedit_4_00`: compatible with pstoedit version 4.00&ndash;4.01, and likely
+//!   with future 4.xx releases.
+//! - No feature starting with `pstoedit_`: compatible with pstoedit version
+//!   3.17&ndash;3.78.
+//!
 //! # Usage
 //! First, the [`init`] function must be called. Then, interaction with pstoedit
 //! is possible using [`Command`] or [`DriverInfo`].

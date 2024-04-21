@@ -16,6 +16,11 @@ Optional Cargo features:
 - `smallvec`: potentially reduce the number of allocations using the
   [`smallvec`](https://crates.io/crates/smallvec) crate.
 
+Additionally, features are used to specify the targeted pstoedit version. Due to
+backward incompatibility, using pstoedit 4.00 or later without specifying an
+appropriate feature for this crate will result in a runtime error. [See below for
+more details.](#requirements-and-compatibility)
+
 ## Examples
 
 ```rust
@@ -34,12 +39,17 @@ for driver in &DriverInfo::get()? {
 }
 ```
 
-## Requirements
+## Requirements and compatibility
 
 Only dynamic linking to pstoedit is supported, so pstoedit needs to be
-installed. The supported DLL version is 301, which is compatible with pstoedit
-version 3.xx starting from 3.17. Currently, pstoedit version 4.00 and higher
-are not supported.
+installed. Multiple versions are supported, but the appropriate feature starting
+with `pstoedit_` has to be enabled to prevent a runtime `IncompatibleVersion`
+error.
+
+- `pstoedit_4_00`: compatible with pstoedit version 4.00&ndash;4.01, and likely
+  with future 4.xx releases.
+- No feature starting with `pstoedit_`: compatible with pstoedit version
+  3.17&ndash;3.78.
 
 ## License
 

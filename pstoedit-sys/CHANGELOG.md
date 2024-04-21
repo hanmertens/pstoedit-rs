@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Support for pstoedit version 4.x.
+- Features `pstoedit_4_00` and `pstoedit_4_01` to target pstoedit version 4.xx.
+- Function `loadpstoeditplugins_plainC`, requiring feature `pstoedit_4_01`.
+- Function `unloadpstoeditplugins`, requiring feature `pstoedit_4_00`.
+- Field `formatGroup` in `DriverDescription_S`, requiring feature `pstoedit_4_00`.
 
 ## [0.1.0] &ndash; 2020-07-13
 ### Added

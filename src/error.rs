@@ -9,7 +9,11 @@ pub enum Error {
     /// The connection to pstoedit was not initialized, i.e.
     /// [`init`][crate::init] was not called first.
     NotInitialized,
-    /// Version of pstoedit is incompatible with this crate.
+    /// Version of pstoedit is incompatible with compiled crate.
+    ///
+    /// This may be because the version of pstoedit is incompatible with this
+    /// crate, or the incorrect feature flags were used to specify the pstoedit
+    /// version, see [the top-level documentation][crate#compatibility].
     IncompatibleVersion,
     /// Internal pstoedit (or ghostscript) error.
     PstoeditError(c_int),
