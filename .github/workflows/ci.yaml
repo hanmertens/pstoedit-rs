@@ -28,21 +28,19 @@ jobs:
             rust: stable
     steps:
     - name: Check out repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Install pstoedit (linux)
       if: matrix.os == 'ubuntu-20.04'
       run: |
            sudo apt-get update
-           sudo apt-get install -y libpstoedit-dev
+           sudo apt-get install -y libpstoedit-dev ghostscript
     - name: Install pstoedit (mac)
       if: matrix.os == 'macos-latest'
-      run: brew install pstoedit
+      run: brew install pstoedit ghostscript
     - name: Install Rust toolchain
-      uses: actions-rs/toolchain@v1
+      uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.rust }}
-        override: true
-        profile: minimal
     - name: Build
       run: cargo build
     - name: Test
@@ -57,12 +55,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Install Rust
-      uses: actions-rs/toolchain@v1
+      uses: dtolnay/rust-toolchain@stable
       with:
-        toolchain: stable
-        override: true
+        components: clippy, rustfmt
     - name: Check clippy
       run: cargo clippy
     - name: Check formatting
