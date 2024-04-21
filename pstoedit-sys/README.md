@@ -11,9 +11,8 @@ that can translate PostScript and PDF graphics into other vector formats.
 
 Only dynamic linking to pstoedit is supported, so pstoedit needs to be
 installed. Multiple versions are supported, but the appropriate feature starting
-with `pstoedit_` has to be enabled to prevent a runtime `IncompatibleVersion`
-error. If multiple are specified, the first in the following list takes
-precedence.
+with `pstoedit_` has to be enabled to prevent a runtime error. If multiple are
+specified, the first in the following list takes precedence.
 
 - `pstoedit_4_01`: compatible with pstoedit version 4.01, and likely with future
   4.xx releases.
