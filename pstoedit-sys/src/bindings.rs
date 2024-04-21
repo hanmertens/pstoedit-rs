@@ -151,6 +151,9 @@ fn bindgen_test_layout_DriverDescription_S() {
         )
     );
 }
+#[cfg(not(feature = "pstoedit_4_00"))]
+pub const pstoeditdllversion: ::std::os::raw::c_uint = 301;
+#[cfg(feature = "pstoedit_4_00")]
 pub const pstoeditdllversion: ::std::os::raw::c_uint = 401;
 extern "C" {
     pub fn pstoedit_plainC(
